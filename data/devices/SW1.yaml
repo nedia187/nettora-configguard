@@ -1,0 +1,16 @@
+hostname: SW1
+
+vlans:
+  - { id: 10, name: USERS }
+  - { id: 20, name: SERVERS }
+  - { id: 999, name: NATIVE_UNUSED }
+  
+access_ports:
+  - { name: Ethernet0/1, vlan: 10, description: PC1 }
+  - { name: Ethernet0/2, vlan: 20, description: PC2 }
+
+trunks:
+  - name: Ethernet0/3
+    description: Trunk to R1
+    allowed_vlans: [10, 20]
+    native_vlan: 999

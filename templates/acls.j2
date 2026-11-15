@@ -1,0 +1,8 @@
+{% for acl in acls %}
+ip access-list extended {{ acl.name }}
+{% for r in acl.rules %}
+ {{ r.seq }} {{ r.action }} {{ r.proto }} {{ r.src }} {{ r.dst }}{{ " eq " ~ r.port if r.port is defined else "" }}
+{% endfor %}
+interface {{ acl.apply_on }}
+ ip access-group {{ acl.name }} {{ acl.direction }}
+{% endfor %}

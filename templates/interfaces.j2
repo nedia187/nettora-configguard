@@ -1,0 +1,17 @@
+{% for intf in interfaces %}
+interface {{ intf.name }}
+ description {{ intf.description }}
+{% if intf.ip is defined %}
+ ip address {{ intf.ip }} {{ intf.mask }}
+{% else %}
+ no ip address
+{% endif %}
+ no shutdown
+{% for sub in intf.subinterfaces | default([]) %}
+interface {{ sub.name }}
+ description {{ sub.description }}
+ encapsulation dot1Q {{ sub.vlan }}
+ ip address {{ sub.ip }} {{ sub.mask }}
+ no shutdown
+{% endfor %}
+{% endfor %}
